@@ -23,14 +23,15 @@
  * 
 */
 
+const navBarFragment = document.createDocumentFragment();
+const navBarItem = document.getElementsByClassName('landing__container').querySelector('h2');
+
 
 /**
  * End Global Variables
  * Start Helper Functions
  * 
 */
-
-
 
 /**
  * End Helper Functions
