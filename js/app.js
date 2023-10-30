@@ -24,7 +24,7 @@
 */
 
 const navBarFragment = document.createDocumentFragment();
-const navBarItem = document.getElementsByClassName('landing__container').querySelector('h2');
+const navBarItems = document.querySelectorAll('.landing__container');
 
 
 /**
@@ -32,6 +32,20 @@ const navBarItem = document.getElementsByClassName('landing__container').querySe
  * Start Helper Functions
  * 
 */
+
+const addNavItems = function () {
+    const navBar = document.querySelector('header');
+    navBarItems.forEach(navItem => {
+        console.log(navItem);
+        const nav_Item = navItem.querySelector('h2');
+        const li = document.createElement('li');
+        
+        li.innerHTML = nav_Item;
+        console.log(li);
+        navBarFragment.appendChild(li);
+    });
+    navBar.appendChild(navBarFragment);
+};
 
 /**
  * End Helper Functions
@@ -41,7 +55,7 @@ const navBarItem = document.getElementsByClassName('landing__container').querySe
 
 // build the nav
 
-
+addNavItems();
 // Add class 'active' to section when near top of viewport
 
 
