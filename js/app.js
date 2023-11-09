@@ -50,20 +50,42 @@ const addNavItems = function () {
 };
 
 
-//active section helper function
+/*a function to detect the section with the active class
+ and then move the active class to the section above or below
+ depending of the amount of the section in viewport*/
 const activeSection = function() {
     //find and store all section elements in the document
-    const sections = document.querySelectorAll('section');
+    const sectionElements = document.querySelectorAll('section');
     //find which section is currently active
-    for (section in sections) {
+    for (section in sectionElements) {
+        /*there is a problem here with the for loop ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !
+        the section value does no exist ..... I think*/
         if (section.classList === 'your-active-class') {
             //debbuger code over @@@@@@@@@heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeereeeeeeeeeeeeeeeeeee!!!!!!
             console.log(`yabbba dabba dooo`); 
             return section};
     };
     //find the index of the currently active section
-    const index = sections.indexOf(section);
-    //compare the sum of the .is
+    const activeSectionIndex = sections.indexOf(section);
+    //compare the sum of the current active class and the section below or above
+    const activeSectionViewport = section.getBoundingClientRect();
+    const activeSectionViewportSum = activeSectionViewport.top + activeSectionViewport.bottom;
+    
+    if(sections[activeSectionIndex -1 ]) {
+        const aboveSection = sections[activeSectionIndex -1];
+        const aboveSectionSum = aboveSection.top + aboveSection.bottom;
+        if (activeSectionViewportSum < aboveSectionSum) {
+            section.classList.toggle('your-active-class');
+            aboveSection.classList.toggle('your-active-class');
+        }
+    }else if (sections[activeSectionIndex + 1]) {
+        const belowSection = sections[activeSectionIndex + 1];
+        const belowSectionSum = belowSection.top + belowSection.bottom;
+        if (activeSectionViewportSum < belowSectionSum) {
+            section.classList.toggle('your-active-class');
+            belowSection.classList.toggle('your-active-class');
+        }
+    }
 }
 
 /**
@@ -78,8 +100,12 @@ const activeSection = function() {
 a loop that runs whenever the javascript page is loaded */
 addNavItems();
 
-
 // Add class 'active' to section when near top of viewport
+
+/* i would like to use a scroll event listener but I don't want 
+something that constantly fires maybe somthing that listens to
+a scroll end event if that even exists */
+
 
 
 // Scroll to anchor ID using scrollTO event
@@ -96,5 +122,5 @@ addNavItems();
 // Scroll to section on link click
 
 // Set sections as active
-
+addEventListener('scrollend', activeSection());
 
