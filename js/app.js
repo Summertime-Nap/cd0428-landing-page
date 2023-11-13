@@ -45,7 +45,7 @@ const addNavItems = function () {
         li.classList.toggle('menu__link');
         li.innerHTML = nav_Item.textContent;
         nav_List.appendChild(li);
-        
+
     });
 };
 
@@ -53,39 +53,56 @@ const addNavItems = function () {
 /*a function to detect the section with the active class
  and then move the active class to the section above or below
  depending of the amount of the section in viewport*/
-const activeSection = function() {
+const activeSection = function () {
     //find and store all section elements in the document
     const sectionElements = document.querySelectorAll('section');
+    console.log('I just ran');
     //find which section is currently active
-    for (section in sectionElements) {
-        /*there is a problem here with the for loop ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! ! !
-        the section value does no exist ..... I think*/
-        if (section.classList === 'your-active-class') {
-            //debbuger code over @@@@@@@@@heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeereeeeeeeeeeeeeeeeeee!!!!!!
-            console.log(`yabbba dabba dooo`); 
-            return section};
+    for (section of sectionElements) {
+        //pleeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeaaaaaaaaaaaaseeeeeeeeeeeeeee uncomment later
+        //console.log(section);
+        console.log(section.classList.contains('your-active-class'));
+        if (section.classList.contains('your-active-class')) {
+            NodeList.prototype.indexOf = Array.prototype.indexOf;
+            const activeSectionIndex = sectionElements.indexOf(section);
+            
+            const activeSectionViewport = section.getBoundingClientRect();
+            const activeSectionViewportSum = activeSectionViewport.top + activeSectionViewport.bottom
+            console.log(`active section top: ${activeSectionViewport.top}`);
+                console.log(`active section bottom: ${activeSectionViewport.bottom}`);
+            console.log(`current activeViewport sum: ${activeSectionViewportSum}`);
+
+            if (sectionElements[activeSectionIndex - 1]) {
+                const aboveSection = sectionElements[activeSectionIndex - 1];
+                const aboveSectionSum = aboveSection.top + aboveSection.bottom;
+                console.log(`above section sum: ${aboveSectionSum}`);
+                if (activeSectionViewportSum < aboveSectionSum) {
+                    section.classList.toggle('your-active-class');
+                    aboveSection.classList.toggle('your-active-class');
+                    break;
+                }
+            } else if (sectionElements[activeSectionIndex + 1]) {
+                console.log(`below section = ${sectionElements[activeSectionIndex + 1]}`)
+                console.log('I exist. Please love me');
+                const belowSection = sectionElements[activeSectionIndex + 1];
+                const belowSectionSum = belowSection.top + belowSection.bottom;
+
+                console.log(`below section top: ${belowSection.top}`);
+                console.log(`below section bottom: ${belowSection.bottom}`);
+                console.log(`below section sum: ${belowSectionSum}`);
+
+                if (activeSectionViewportSum < belowSectionSum) {
+                    section.classList.toggle('your-active-class');
+                    belowSection.classList.toggle('your-active-class');
+                    break;
+                }
+            }
+        };
     };
     //find the index of the currently active section
-    const activeSectionIndex = sections.indexOf(section);
+    //const activeSectionIndex = sectionElements.indexOf(section);
     //compare the sum of the current active class and the section below or above
-    const activeSectionViewport = section.getBoundingClientRect();
-    const activeSectionViewportSum = activeSectionViewport.top + activeSectionViewport.bottom;
-    
-    if(sections[activeSectionIndex -1 ]) {
-        const aboveSection = sections[activeSectionIndex -1];
-        const aboveSectionSum = aboveSection.top + aboveSection.bottom;
-        if (activeSectionViewportSum < aboveSectionSum) {
-            section.classList.toggle('your-active-class');
-            aboveSection.classList.toggle('your-active-class');
-        }
-    }else if (sections[activeSectionIndex + 1]) {
-        const belowSection = sections[activeSectionIndex + 1];
-        const belowSectionSum = belowSection.top + belowSection.bottom;
-        if (activeSectionViewportSum < belowSectionSum) {
-            section.classList.toggle('your-active-class');
-            belowSection.classList.toggle('your-active-class');
-        }
-    }
+
 }
 
 /**
@@ -122,5 +139,5 @@ a scroll end event if that even exists */
 // Scroll to section on link click
 
 // Set sections as active
-addEventListener('scrollend', activeSection());
+window.addEventListener('scroll', activeSection);
 
