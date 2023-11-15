@@ -56,40 +56,35 @@ const addNavItems = function () {
 const activeSection = function () {
     //find and store all section elements in the document
     const sectionElements = document.querySelectorAll('section');
-    console.log('I just ran');
     //find which section is currently active
     for (section of sectionElements) {
-        //pleeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeaaaaaaaaaaaaseeeeeeeeeeeeeee uncomment later
-        //console.log(section);
         console.log(section.classList.contains('your-active-class'));
         if (section.classList.contains('your-active-class')) {
+            //find the index of the currently active section
             NodeList.prototype.indexOf = Array.prototype.indexOf;
             const activeSectionIndex = sectionElements.indexOf(section);
+            const belowIndex = activeSectionIndex + 1;
+            const aboveIndex = activeSectionIndex - 1;
+            console.log(belowIndex);
+            console.log( `above section = ` + sectionElements[aboveIndex]);
+            console.log(`below section = ` + sectionElements[belowIndex]);
             
             const activeSectionViewport = section.getBoundingClientRect();
             const activeSectionViewportSum = activeSectionViewport.top + activeSectionViewport.bottom
-            console.log(`active section top: ${activeSectionViewport.top}`);
-                console.log(`active section bottom: ${activeSectionViewport.bottom}`);
-            console.log(`current activeViewport sum: ${activeSectionViewportSum}`);
 
-            if (sectionElements[activeSectionIndex - 1]) {
-                const aboveSection = sectionElements[activeSectionIndex - 1];
+            
+            //compare the sum of the current active class and the section below or above
+            if (sectionElements[aboveIndex]) {
+                const aboveSection = sectionElements[aboveIndex];
                 const aboveSectionSum = aboveSection.top + aboveSection.bottom;
-                console.log(`above section sum: ${aboveSectionSum}`);
                 if (activeSectionViewportSum < aboveSectionSum) {
                     section.classList.toggle('your-active-class');
                     aboveSection.classList.toggle('your-active-class');
                     break;
                 }
-            } else if (sectionElements[activeSectionIndex + 1]) {
-                console.log(`below section = ${sectionElements[activeSectionIndex + 1]}`)
-                console.log('I exist. Please love me');
-                const belowSection = sectionElements[activeSectionIndex + 1];
+            } else if (sectionElements[belowIndex]) {
+                const belowSection = sectionElements[belowIndex];
                 const belowSectionSum = belowSection.top + belowSection.bottom;
-
-                console.log(`below section top: ${belowSection.top}`);
-                console.log(`below section bottom: ${belowSection.bottom}`);
-                console.log(`below section sum: ${belowSectionSum}`);
 
                 if (activeSectionViewportSum < belowSectionSum) {
                     section.classList.toggle('your-active-class');
@@ -99,11 +94,8 @@ const activeSection = function () {
             }
         };
     };
-    //find the index of the currently active section
-    //const activeSectionIndex = sectionElements.indexOf(section);
-    //compare the sum of the current active class and the section below or above
 
-}
+};
 
 /**
  * End Helper Functions
