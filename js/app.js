@@ -27,7 +27,7 @@
 const navBarItems = document.querySelectorAll('.landing__container');
 //where the navBar document fragment will be anchored
 const navBar = document.querySelector('header');
-
+navBar.classList.toggle('konnichiha',  0 < 1);
 
 /**
  * End Global Variables
@@ -50,50 +50,19 @@ const addNavItems = function () {
 };
 
 
-/*a function to detect the section with the active class
- and then move the active class to the section above or below
- depending of the amount of the section in viewport*/
+
 const activeSection = function () {
     //find and store all section elements in the document
     const sectionElements = document.querySelectorAll('section');
-    //find which section is currently active
-    for (section of sectionElements) {
-        console.log(section.classList.contains('your-active-class'));
-        if (section.classList.contains('your-active-class')) {
-            //find the index of the currently active section
-            NodeList.prototype.indexOf = Array.prototype.indexOf;
-            const activeSectionIndex = sectionElements.indexOf(section);
-            const belowIndex = activeSectionIndex + 1;
-            const aboveIndex = activeSectionIndex - 1;
-            console.log(belowIndex);
-            console.log( `above section = ` + sectionElements[aboveIndex]);
-            console.log(`below section = ` + sectionElements[belowIndex]);
-            
-            const activeSectionViewport = section.getBoundingClientRect();
-            const activeSectionViewportSum = activeSectionViewport.top + activeSectionViewport.bottom
+    
+    const activeObserver = new IntersectionObserver(entries => {
+        let activeSection = document.querySelector('.your-active-class');
+        entries.sort((a, b) => {return b.intersectionRatio - a.intersectionRatio});
+        entries[0].target.classList.toggle('your-active-class', entries[0].target != activeSection);
+        activeSection.classList.toggle('your-active-class');
+    });
 
-            
-            //compare the sum of the current active class and the section below or above
-            if (sectionElements[aboveIndex]) {
-                const aboveSection = sectionElements[aboveIndex];
-                const aboveSectionSum = aboveSection.top + aboveSection.bottom;
-                if (activeSectionViewportSum < aboveSectionSum) {
-                    section.classList.toggle('your-active-class');
-                    aboveSection.classList.toggle('your-active-class');
-                    break;
-                }
-            } else if (sectionElements[belowIndex]) {
-                const belowSection = sectionElements[belowIndex];
-                const belowSectionSum = belowSection.top + belowSection.bottom;
-
-                if (activeSectionViewportSum < belowSectionSum) {
-                    section.classList.toggle('your-active-class');
-                    belowSection.classList.toggle('your-active-class');
-                    break;
-                }
-            }
-        };
-    };
+    sectionElements.forEach(section => activeObserver.observe(section))
 
 };
 
