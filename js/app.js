@@ -36,20 +36,6 @@ const nav_List = navBar.querySelector('ul');
  * 
 */
 
-const activeSection = function () {
-    //find and store all section elements in the document
-    const sectionElements = document.querySelectorAll('section');
-    
-    const activeObserver = new IntersectionObserver(entries => {
-        let activeSection = document.querySelector('.your-active-class');
-        entries.sort((a, b) => {return b.intersectionRatio - a.intersectionRatio});
-        entries[0].target.classList.toggle('your-active-class', entries[0].target != activeSection);
-        activeSection.classList.toggle('your-active-class');
-    });
-
-    sectionElements.forEach(section => activeObserver.observe(section))
-
-};
 
 /**
  * End Helper Functions
@@ -76,9 +62,20 @@ const addNavItems = function () {
 
 // Add class 'active' to section when near top of viewport
 
+const activeSection = function () {
+    //find and store all section elements in the document
+    const sectionElements = document.querySelectorAll('section');
+    
+    const activeObserver = new IntersectionObserver(entries => {
+        let activeSection = document.querySelector('.your-active-class');
+        entries.sort((a, b) => {return b.intersectionRatio - a.intersectionRatio});
+        entries[0].target.classList.toggle('your-active-class', entries[0].target != activeSection);
+        activeSection.classList.toggle('your-active-class');
+    });
 
+    sectionElements.forEach(section => activeObserver.observe(section))
 
-
+};
 
 // Scroll to anchor ID using scrollTO event
 
