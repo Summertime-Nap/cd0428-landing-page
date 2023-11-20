@@ -25,31 +25,16 @@
 
 //The nodelist containing all available sections
 const navBarItems = document.querySelectorAll('.landing__container');
-//where the navBar document fragment will be anchored
+//The navbar
 const navBar = document.querySelector('header');
-navBar.classList.toggle('konnichiha',  0 < 1);
+//the unordered list containing the section buttons
+const nav_List = navBar.querySelector('ul');
 
 /**
  * End Global Variables
  * Start Helper Functions
  * 
 */
-
-const addNavItems = function () {
-    const nav_List = navBar.querySelector('ul');
-    navBarItems.forEach(navItem => {
-        //find the section names to be added to the ul
-        const nav_Item = navItem.querySelector('h2');
-        //create a list item and append it to the ul in the header
-        const li = document.createElement('li');
-        li.classList.toggle('menu__link');
-        li.innerHTML = nav_Item.textContent;
-        nav_List.appendChild(li);
-
-    });
-};
-
-
 
 const activeSection = function () {
     //find and store all section elements in the document
@@ -76,13 +61,22 @@ const activeSection = function () {
 
 /*calling the function to build the nav || or maybe make 
 a loop that runs whenever the javascript page is loaded */
-addNavItems();
+const addNavItems = function () {
+    navBarItems.forEach(navItem => {
+        //find the section names to be added to the ul
+        const nav_Item = navItem.querySelector('h2');
+        //create a list item and append it to the ul in the header
+        const li = document.createElement('li');
+        li.classList.toggle('menu__link');
+        li.innerHTML = nav_Item.textContent;
+        nav_List.appendChild(li);
+
+    });
+};
 
 // Add class 'active' to section when near top of viewport
 
-/* i would like to use a scroll event listener but I don't want 
-something that constantly fires maybe somthing that listens to
-a scroll end event if that even exists */
+
 
 
 
@@ -96,8 +90,10 @@ a scroll end event if that even exists */
 */
 
 // Build menu 
+document.addEventListener('DOMContentLoaded', addNavItems, true); 
 
 // Scroll to section on link click
+
 
 // Set sections as active
 window.addEventListener('scroll', activeSection);
