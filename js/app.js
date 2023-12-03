@@ -36,6 +36,12 @@ const nav_List = navBar.querySelector('ul');
  * 
 */
 
+const makeViewable = function (element) {
+    const sectionName = element.target.textContent;
+    const actualSection = document.querySelector(`[data-nav = "${sectionName}"]`);
+    actualSection.scrollIntoView({behavior: "smooth"});
+    actualSection.classList.toggle('your-active-class');
+};
 
 /**
  * End Helper Functions
@@ -55,6 +61,7 @@ const addNavItems = function () {
         const li = document.createElement('li');
         li.classList.toggle('menu__link');
         li.innerHTML = nav_Item.textContent;
+        li.addEventListener('click', makeViewable);
         nav_List.appendChild(li);
 
     });
@@ -90,6 +97,8 @@ const activeSection = function () {
 document.addEventListener('DOMContentLoaded', addNavItems, true); 
 
 // Scroll to section on link click
+
+//Snav_List.childNodes
 
 
 // Set sections as active
