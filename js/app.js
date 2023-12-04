@@ -37,6 +37,9 @@ const nav_List = navBar.querySelector('ul');
 */
 
 const makeViewable = function (element) {
+    let activeSection = document.querySelector('.your-active-class');
+    activeSection.classList.toggle('your-active-class');
+
     const sectionName = element.target.textContent;
     const actualSection = document.querySelector(`[data-nav = "${sectionName}"]`);
     actualSection.scrollIntoView({behavior: "smooth"});
@@ -51,8 +54,6 @@ const makeViewable = function (element) {
 
 // build the nav
 
-/*calling the function to build the nav || or maybe make 
-a loop that runs whenever the javascript page is loaded */
 const addNavItems = function () {
     navBarItems.forEach(navItem => {
         //find the section names to be added to the ul
