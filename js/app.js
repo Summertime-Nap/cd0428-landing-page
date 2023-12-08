@@ -47,18 +47,18 @@ const nav_List = navBar.querySelector('ul');
 // build the nav
 
 const addNavItems = function () {
-    navBarItems.forEach((navItem, x) => {
+    navBarItems.forEach((navItem, xxx) => {
         //find the section names to be added to the ul
         const nav_Item = navItem.querySelector('h2');
         //create a list item and append it to the ul in the header
         const li = document.createElement('li');
+
         li.classList.toggle('menu__link');
         li.innerHTML = nav_Item.textContent;
+        li.dataset.nav = navItem.parentElement.dataset.nav;
         li.addEventListener('click', makeViewable);
 
-        if (x = 0) {
-            li.classList.add('active');
-        };
+        li.classList.toggle('active', xxx === 0);
 
         nav_List.appendChild(li);
 
@@ -75,6 +75,7 @@ const activeSection = function () {
         let activeSection = document.querySelector('.your-active-class');
         entries.sort((a, b) => {return b.intersectionRatio - a.intersectionRatio});
         entries[0].target.classList.toggle('your-active-class', entries[0].target != activeSection);
+        
         activeSection.classList.toggle('your-active-class');
     });
 
@@ -86,12 +87,18 @@ const activeSection = function () {
 
 const makeViewable = function (element) {
     let activeSection = document.querySelector('.your-active-class');
+    let activeMenuLink = document.querySelector('.active');
     activeSection.classList.toggle('your-active-class');
+    activeMenuLink.classList.toggle('active');
 
     const sectionName = element.target.textContent;
-    const actualSection = document.querySelector(`[data-nav = "${sectionName}"]`);
+    const sectionContainer = document.querySelector('main');
+    const actualSection = sectionContainer.querySelector(`[data-nav = "${sectionName}"]`);
+    
+
     actualSection.scrollIntoView({behavior: "smooth"});
     actualSection.classList.toggle('your-active-class');
+    element.target.classList.toggle('active');
 };
 
 /**
