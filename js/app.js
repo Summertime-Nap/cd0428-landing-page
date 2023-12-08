@@ -36,7 +36,15 @@ const nav_List = navBar.querySelector('ul');
  * 
 */
 
+const makeViewable = function (element) {
+    let activeSection = document.querySelector('.your-active-class');
+    activeSection.classList.toggle('your-active-class');
 
+    const sectionName = element.target.textContent;
+    const actualSection = document.querySelector(`[data-nav = "${sectionName}"]`);
+    actualSection.scrollIntoView({behavior: "smooth"});
+    actualSection.classList.toggle('your-active-class');
+};
 
 /**
  * End Helper Functions
@@ -69,7 +77,7 @@ const addNavItems = function () {
 const activeSection = function () {
     //find and store all section elements in the document
     const sectionElements = document.querySelectorAll('section');
-    //
+    
     const activeObserver = new IntersectionObserver(entries => {
         let activeSection = document.querySelector('.your-active-class');
         entries.sort((a, b) => {return b.intersectionRatio - a.intersectionRatio});
@@ -90,15 +98,6 @@ const activeSection = function () {
 
 // Scroll to anchor ID using scrollTO event
 
-const makeViewable = function (element) {
-    let activeSection = document.querySelector('.your-active-class');
-    activeSection.classList.toggle('your-active-class');
-
-    const sectionName = element.target.textContent;
-    const actualSection = document.querySelector(`[data-nav = "${sectionName}"]`);
-    actualSection.scrollIntoView({behavior: "smooth"});
-    actualSection.classList.toggle('your-active-class');
-};
 
 /**
  * End Main Functions
@@ -110,6 +109,9 @@ const makeViewable = function (element) {
 document.addEventListener('DOMContentLoaded', addNavItems, true); 
 
 // Scroll to section on link click
+
+//Snav_List.childNodes
+
 
 // Set sections as active
 window.addEventListener('scroll', activeSection);
