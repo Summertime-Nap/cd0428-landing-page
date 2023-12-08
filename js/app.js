@@ -47,16 +47,20 @@ const nav_List = navBar.querySelector('ul');
 // build the nav
 
 const addNavItems = function () {
-    navBarItems.forEach(navItem => {
+    navBarItems.forEach((navItem, x) => {
         //find the section names to be added to the ul
         const nav_Item = navItem.querySelector('h2');
         //create a list item and append it to the ul in the header
         const li = document.createElement('li');
         li.classList.toggle('menu__link');
+        li.dataset.nav = navItem.parentElement.dataset.nav;
         li.innerHTML = nav_Item.textContent;
         li.addEventListener('click', makeViewable);
         nav_List.appendChild(li);
-
+        console.log(x);
+        if (x = 0) {
+            li.classList.add('.active');
+        }
     });
 };
 
@@ -70,6 +74,13 @@ const activeSection = function () {
         let activeSection = document.querySelector('.your-active-class');
         entries.sort((a, b) => {return b.intersectionRatio - a.intersectionRatio});
         entries[0].target.classList.toggle('your-active-class', entries[0].target != activeSection);
+        const menuLink = entries[0].target.dataset.nav;
+        let currentActiveMenuLink = document.querySelector(`[data-nav = "${menuLink}"]`);
+        let previousActiveMenuLink = document.querySelector('.active');
+        //console.log('previous ' + previousActiveMenuLink);
+        //console.log('current' + currentActiveMenuLink);
+        //previousActiveMenuLink.classList.remove('active');
+        //currentActiveMenuLink.classList.add('active', currentActiveMenuLink != previousActiveMenuLink);
         activeSection.classList.toggle('your-active-class');
     });
 
