@@ -47,7 +47,7 @@ const nav_List = navBar.querySelector('ul');
 // build the nav
 
 const addNavItems = function () {
-    navBarItems.forEach((navItem, xxx) => {
+    navBarItems.forEach((navItem) => {
         //find the section names to be added to the ul
         const nav_Item = navItem.querySelector('h2');
         //create a list item and append it to the ul in the header
@@ -58,7 +58,6 @@ const addNavItems = function () {
         li.dataset.nav = navItem.parentElement.dataset.nav;
         li.addEventListener('click', makeViewable);
 
-        li.classList.toggle('active', xxx === 0);
 
         nav_List.appendChild(li);
 
@@ -79,8 +78,11 @@ const activeSection = function () {
         entries[0].target.classList.toggle('your-active-class', entries[0].target != activeSection);
         let navData = entries[0].target.dataset.nav;
         let newMenuLink = navMenu.querySelector(`[data-nav = "${navData}"]`);
-        oldMenuLink.classList.toggle('active');
-        newMenuLink.classList.toggle('active');
+        oldMenuLink.classList.toggle('active', oldMenuLink === true);
+        if (newMenuLink) {
+            newMenuLink.classList.toggle('active');
+
+        };
         activeSection.classList.toggle('your-active-class');
     });
 
@@ -94,8 +96,10 @@ const makeViewable = function (element) {
     let activeSection = document.querySelector('.your-active-class');
     let activeMenuLink = document.querySelector('.active');
     activeSection.classList.toggle('your-active-class');
-    activeMenuLink.classList.toggle('active');
+    if (activeMenuLink) {
+        activeMenuLink.classList.toggle('active');
 
+    };
     const sectionName = element.target.textContent;
     const sectionContainer = document.querySelector('main');
     const actualSection = sectionContainer.querySelector(`[data-nav = "${sectionName}"]`);
