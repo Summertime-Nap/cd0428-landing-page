@@ -73,9 +73,14 @@ const activeSection = function () {
     //
     const activeObserver = new IntersectionObserver(entries => {
         let activeSection = document.querySelector('.your-active-class');
+        let navMenu = document.querySelector('#navbar__list');
+        let oldMenuLink = navMenu.querySelector('.active'); 
         entries.sort((a, b) => {return b.intersectionRatio - a.intersectionRatio});
         entries[0].target.classList.toggle('your-active-class', entries[0].target != activeSection);
-        
+        let navData = entries[0].target.dataset.nav;
+        let newMenuLink = navMenu.querySelector(`[data-nav = "${navData}"]`);
+        oldMenuLink.classList.toggle('active');
+        newMenuLink.classList.toggle('active');
         activeSection.classList.toggle('your-active-class');
     });
 
@@ -113,5 +118,5 @@ document.addEventListener('DOMContentLoaded', addNavItems, true);
 // Scroll to section on link click
 
 // Set sections as active
-window.addEventListener('scroll', activeSection);
+document.addEventListener('scroll', activeSection);
 
