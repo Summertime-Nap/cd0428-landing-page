@@ -112,6 +112,8 @@ const makeViewable = function (element) {
  * 
 */
 
+
+
 // Build menu 
 document.addEventListener('DOMContentLoaded', addNavItems, true); 
 
@@ -119,4 +121,5 @@ document.addEventListener('DOMContentLoaded', addNavItems, true);
 
 // Set sections as active
 document.addEventListener('scroll', activeSection);
+
 
